@@ -1,0 +1,121 @@
+\begin{sectionbox}\nospacing
+  Let $f$ be a unkown function that we can evaluate with $D=\domain(f)$.
+  Let $S$ be a subset of points $S\subseteq D$ that we can choose make noisy observations
+  $y_{S}$ of $f$ in order to maximze the \textit{information gain}\cref{defn:information}:
+  \hfill[\cref{example:maximizing_information_gain}]
+  \begin{align}
+    \boxed{F(S):=H(f)-H(f|y_s)\eqs{\text{\cref{eq:mutual_information}}}I(f;y_s)}\label{eq:information_gain}
+  \end{align}
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\columnwidth}
+      \centering{
+        \def\svgwidth{100pt}
+        \resizebox{\linewidth}{!}{\input{src/active_learning/figures/prior.pdf_tex}}
+      }
+      \caption{Prior}
+      \label{fig:prior}
+    \end{subfigure}%
+    \hfil
+    \begin{subfigure}{0.32\columnwidth}
+      \centering{
+        \def\svgwidth{100pt}
+        \resizebox{\linewidth}{!}{\input{src/active_learning/figures/high_infogain.pdf_tex}}
+      }
+      \caption{High Infogain}
+      \label{fig:high}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.32\columnwidth}
+      \centering{
+        \def\svgwidth{100pt}
+        \resizebox{\linewidth}{!}{\input{src/active_learning/figures/low_infogain.pdf_tex}}
+      }
+      \caption{Low Infogain}
+      \label{fig:low}
+    \end{subfigure}
+  \end{figure}
+\end{sectionbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[Optimal Set of labels]\label{defn:optimal_set_of_labels}
+    \begin{align}
+      \left\{x_1,\ldots,x_{\abs{S}}\right\}=\argmax_{S\subseteq D,\abs{S}\leq T}F(S)
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{sectionbox}\nospacing
+  \imp{Problem}: $F(S)$ is NP-hard to optimize.\\
+  \imp{Idea}: optimize greedily only the next point.
+\end{sectionbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[\hfill\proofref{proof:defn:greedy_mutual_information_maximization_objective}
+    \newline Greedy Mutual Information Maximization Objective]\label{defn:greedy_mutual_information_maximization_objective}
+    Only consider the next point that maximizes the mutual information and not all at once:
+    \begin{align}
+          x_{t+1}&=\argmax_{x\in D}F \left(S_{t}\cup \left\{x\right\}\right)\nonumber\\[-1\jot]
+                 &=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{corbox}\nospacing
+  \begin{cor}[\hfill\proofref{proof:cor:mutal_information_maximization_homoscedactic_gaussian}\newline
+    Homoscedactic Gaussian]\label{cor:mutal_information_maximization_homoscedactic_gaussian}
+    \begin{align}
+      x_{t}&=\argmax_{x\in D}\std_{t-1}^2(x)
+    \end{align}
+    this can then be maximized.\\
+    Let $A_{t}=\left\{x_{1},\ldots,x_{t}\right\}$ then it follows:
+    \begin{align}
+      \std^2_t(x)=\kernel(x,x)-\kernel_{x,A_t}\left(\Kernelm_{A_t,A_t}+\std^2\vec{I}\right)^{-1}\kernel_{x,A_t}
+    \end{align}
+  \end{cor}
+\end{corbox}
+\begin{algorithmbox}
+  \begin{algo}[Greedy Uncertainty Sampling]\label{algo:greedy_mutual_information_maximization}
+    \begin{algorithmic}[1]
+      \item[] \imp{Given}: $S_{t}:=\left\{x_{1},\ldots,x_{t}\right\}$
+      \For{$t+1\ldots,T$}
+        \begin{align*}
+          x_{t+1}&=\argmax_{x\in D}F \left(S_{t}\cup \left\{x\right\}\right)\\[-1\jot]
+                 &=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)
+        \end{align*}
+      \EndFor
+    \end{algorithmic}
+  \end{algo}
+\end{algorithmbox}
+\begin{corbox}\nospacing
+  \begin{cor}[Diminishing Returns Property]\label{cor:diminishing_returns_property}\leavevmode\\
+    Mutal information satisifies modular submodularity (\cref{property:montone_submodularity})\\
+    $\Rightarrow$ adding a label/memasurement for some data point can only increase information:
+    \begin{alignat*}{3}
+      &&F \left(\mcA\cup \left\{x\right\}\right)-F \left(\mcA\right)
+      &\geq F \left(\mcB\cup \left\{X\right\}\right)-F(\mcB)\\[-1\jot]
+      &&H\left(y_x|y_{\mcA}\right)-H \left(y_X|f\right)&\geq H\left(y_x|y_{\mcB}\right)-H \left(y_X|f\right)\\[-1\jot]
+      \iff&&H\left(y_x|y_{\mcA}\right)&\geq H\left(y_x|y_{\mcA}\right)
+    \end{alignat*}
+  \end{cor}
+\end{corbox}
+\begin{notebox}[Note]\nospacing
+  For Gaussians processes the utitlity $F$ does only the depend on the set of observations we require but
+  not on the actual observations/labels.
+  This is because the entropy for Guassian depends only on the covariance matrix and not the actual measurments.
+\end{notebox}
+\begin{corbox}\nospacing
+  \begin{cor}[Constant Factor Approximation]\label{cor:constant_factor_approximation}
+    \cref{algo:greedy_mutual_information_maximization} provides a constant factor approximation of
+    \cref{eq:information_gain}:
+    \begin{align}
+      F(S_T)\leq\underbrace{\left(1-\frac{1}{\e}\right)}_{\approx.63}\max_{S\subseteq D,\abs{S}\leq T}F(S)
+    \end{align}
+  \end{cor}
+\end{corbox}
+\begin{notebox}[Note]\nospacing
+  There exist other objectives then entropy reduction/mutual information in order to quantify uncertainty but they
+  are usually more expesnive but may offer other advantages.
+\end{notebox}
+
+%%% TeX-command-extra-options: "-shell-escape"
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../formulary"
+%%% End:

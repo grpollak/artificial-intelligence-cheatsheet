@@ -1,0 +1,88 @@
+\begin{proofbox}\nospacing
+  \begin{proof}\cref{defn:greedy_mutual_information_maximization_objective}\label{proof:defn:greedy_mutual_information_maximization_objective}\leavevmode\\
+    \scalematho{\begin{align*}
+                x_{t+1}&=\argmax_{x\in D}F \left(S_{t}\cup \left\{x\right\}\right)\eqs{\mathclap{\text{\cref{eq:argmaxShifting}}}}\argmax_{x\in D}F \left(S_{t}\cup \left\{x\right\}\right)-F \left(S_t\right)\\[-1\jot]
+                         &=\argmax_{x\in D} I(f;y_{S_t+x})-I(f;y_{S_t})\\[-1\jot]
+                 &=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)\\[-1\jot]
+                 &\hspace{-2mm}\eqs{\mathclap{\text{\cref{eq:mutual_information}}}}\argmax_{x\in D}H\left(y_{S_t+x}\right)-H\left(y_{S_t+x}|f\right)
+                   -H\left(y_{S_t}\right)+H\left(y_{S_t}|f\right)\\[-1\jot]
+                 &\hspace{-2mm}=\argmax_{x\in D}\ul{H\left(y_{S_t},x\right)}-H\left(y_{S_t+x}|f\right)
+                   \ul{-H\left(y_{S_t}\right)}+H\left(y_{S_t}|f\right)\\[-1\jot]
+                 &\hspace{-4mm}\eqs{\ul{\text{\cref{eq:chain_rule_for_entropy}}}}
+                 \argmax_{x\in D}\ul{H \left(y_x|y_{S_t}\right)}-\ul[ulc2]{H\left(y_{S_t+x}|f\right)}+H\left(y_{S_t}|f\right)\\[-1\jot]
+                  &\eqs{\clubsuit}H(y_x|y_{S_t})-H(y_x|f)
+                \end{align*}}
+  \end{proof}
+\end{proofbox}
+\begin{notebox}[Note $\clubsuit$]\nospacing
+ \begin{align*}
+   \ul[ulc2]{H\left(y_{S_t}\cup x|f\right)}&\eqs{\text{\cref{eq:chain_rule_for_entropy}}}H\left(y_{s_t}|f\right)+H\left(y_{x}|f,y_{S_t}\right)\\[-1\jot]
+                                           &=H \left(y_{s_t}|f\right)+H\left(y_{x}|f\right)
+ \end{align*}
+\end{notebox}
+\begin{proofbox}\nospacing
+  \begin{proof}\cref{cor:mutal_information_maximization_homoscedactic_gaussian}
+    \label{proof:cor:mutal_information_maximization_homoscedactic_gaussian}
+    \begin{align*}
+      \begin{aligned}
+        &y=f(x)+\epsilonc\\
+        &\epsilonc\distas\Normaldist(0,\std_n^2)
+      \end{aligned}&&\Rightarrow&&\prob(y|x,f)=\Normaldist\left(f(x),\std_n^2\right)
+    \end{align*}
+    \begin{align*}
+          x_{t+1}&=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)\\[-1\jot]
+                 &\eqs{\text{\cref{eq:entropy_multivariate_gaussian}}}
+                   \argmax_{x\in D}
+                   \frac{1}{2}\ln(2\pi\e)\std^2{x|S_t}-\frac{1}{2}\ln(2\pi\e)\std^2_{n}\\[-1\jot]
+                 &\eqs{\text{\cref{eq:argmaxShifting}}}\std_{x|S_t}^2
+    \end{align*}
+    Thus if we define $\std_{t-1}^2(x)=\std_{x|x_{1:t-1}}^2$ it follows:
+    \begin{align}
+      x_{t}&=\argmax_{x\in D}\std_{t-1}^2(x)
+    \end{align}
+  \end{proof}
+\end{proofbox}
+\begin{proofbox}\nospacing
+  \begin{proof}\cref{cor:mutal_information_maximization_heteroscedastic_gaussian}
+    \label{proof:cor:mutal_information_maximization_heteroscedastic_gaussian}
+    \begin{align*}
+      \begin{aligned}
+        &y=f(x)+\epsilonc\\
+        &\epsilonc\distas\Normaldist(0,\std_n^2)
+      \end{aligned}&&\Rightarrow&&\prob(y|x,f)=\Normaldist\left(f(x),\std_n^2(x)\right)
+    \end{align*}
+    \begin{align*}
+          x_{t+1}&=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)\\[-1\jot]
+                 &\eqs{\text{\cref{eq:entropy_multivariate_gaussian}}}
+                   \argmax_{x\in D}
+                   \frac{1}{2}\ln(2\pi\e)\std^2{x|S_t}-\frac{1}{2}\ln(2\pi\e)\std^2_{n}(x)\\[-1\jot]
+                 &\eqs{\text{\cref{eq:argmaxShifting}}}\argmax_{x\in D}
+                   \ln\frac{\std_f^2(x)}{\std_n^2(x)}
+                 \eqs{\text{\cref{eq:argmax_strictly_monotonic_functions}}}\argmax_{x\in D}
+                    \frac{\std_f^2(x)}{\std_n^2(x)}
+    \end{align*}
+  \end{proof}
+\end{proofbox}
+\begin{proofbox}\nospacing
+   \begin{proof}\label{proof:defn:bald}\cref{defn:bald}
+     \begin{align*}
+       I\left(\thetacvec;\widehat{y}|x_{1:t},y_{1:t}\right)
+       \oset[1.4ex]{\mathclap{\text{\cref{eq:mutual_information}}}}{=}&
+            H\left(\widehat{y}|\widehat{x},x_{1:t},y_{1:t}\right)- H\left(\widehat{y}|\thetacvec,\widehat{x},x_{1:t},y_{1:t}\right)\\[-1\jot]
+       \oset[1.4ex]{\mathclap{\text{\cref{eq:conditional_entropy}}}}{=}&
+         H\left(\widehat{y}|\widehat{x},x_{1:t},y_{1:t}\right)\\[-1\jot]
+        &\hspace{-3em}-\Expect_{\widehat{y}|\thetacvec\distas\prob(\cdot|x_{1:t},y_{1:t})}
+         \left[\log\prob_{\widehat{y}|\thetacvec}\left(\widehat{y}|\thetacvec,\widehat{x},x_{1:t},y_{1:t}\right)\right]
+       \\[-1\jot]
+       \oset[1.4ex]{\mathclap{\text{\cref{eq:entropy}}}}{=}&
+         H\left(\widehat{y}|\widehat{x},x_{1:t},y_{1:t}\right)\\[-1\jot]
+        &\hspace{-0.5em}-\Expect_{\widehat{y}|\thetacvec\distas\prob(\cdot|x_{1:t},y_{1:t})}
+         \left[H\left(\widehat{y}|\thetacvec,\widehat{x},x_{1:t},y_{1:t}\right)\right]
+     \end{align*}
+   \end{proof}
+\end{proofbox}
+%%% TeX-command-extra-options: "-shell-escape"
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../formulary"
+%%% End:

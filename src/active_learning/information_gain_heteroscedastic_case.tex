@@ -1,0 +1,25 @@
+\begin{sectionbox}\nospacing
+  So far we considered homoscedastic noise\cref{defn:homoscedastic_noise} but
+  sometimes we may have heteroscedasctic\cref{defn:heteroscedastic_noise} noise
+  $\std_{n}(x)$ $\iff$ different locations may have different noise i.e.\ to different sensors.\\
+  \imp{Problem}: in the heteroscedas case the most uncertain outcomes are no longer necessarily the most informative.
+\end{sectionbox}
+\begin{corbox}\nospacing
+  \begin{cor}[\hfill\proofref{proof:cor:mutal_information_maximization_heteroscedastic_gaussian}\newline
+    Heteroscedastic Gaussian]\label{cor:mutal_information_maximization_heteroscedastic_gaussian}
+    \begin{align}
+      x_{t}&=\argmax_{x\in D}\frac{\text{epistemic uncertainty}}{\text{aleatoric uncertainty}}
+             =\argmax_{x\in D}\frac{\std_{f}^2(x)}{\std_n^2(x)}
+    \end{align}
+    this can then be maximized.\\
+    Let $A_{t}=\left\{x_{1},\ldots,x_{t}\right\}$ then it follows:
+    \begin{align}
+      \std^2_t(x)=\kernel(x,x)-\kernel_{x,A_t}\left(\Kernelm_{A_t,A_t}+\std^2\vec{I}\right)^{-1}\kernel_{x,A_t}
+    \end{align}
+  \end{cor}
+\end{corbox}
+%%% TeX-command-extra-options: "-shell-escape"
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../formulary"
+%%% End:

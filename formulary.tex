@@ -1,5 +1,5 @@
 % ==============================================================================
-% Copyright (c) 2017 [Georg R. Pollak]  
+% Copyright (C) 2017 [Georg R. Pollak]
 % ==============================================================================
 % ------------------------------------------------------------------------------
 
@@ -69,7 +69,7 @@
   % Graphic-paths important when including pdf_tikz pictures e.g. with inkscape
   % ------------------------------------------------------------------------------ 
   \graphicspath{{figures/}
-                %{figures/ch1/}
+                {src/active_learning/figures/}
           }
 % ==============================================================================
 % Document begin
@@ -77,10 +77,30 @@
 \begin{document}
 % Chapter 1
 \section*{Probabilistic Artificial Intelligence}\label{sec:probabilistic_artificial_intelligence}
+  \section{Markov Decision Processes}\label{sec:markov_decision_processes}
+    \input{src/markov_decsision_processes/intro.tex}
   \section{Active Learning}\label{sec:active_learning}
-  \input{src/intro.tex}
-\section{Markov Decision Processes}\label{sec:markov_decision_processes}
-  \input{src/mdp/intro.tex}
+    \input{src/active_learning/intro.tex}
+    \subsection{Uncertainty Sampling for Regression}\label{subsec:uncertainty_sampling_for_regression}
+      \subsubsection{Maximizing the Information Gain}\label{subsubsec:maximizing_the_information_gain}
+      \input{src/active_learning/information_gain.tex}
+      \subsubsection{Heteroscedastic Case}\label{subsubsec:heteroscedastic_case}
+      \input{src/active_learning/information_gain_heteroscedastic_case.tex}
+    \subsection{Uncertainty Sampling for Classification}\label{subsec:uncertainty_sampling_for_classification}
+      \input{src/active_learning/uncertainty_sampling/classification/intro.tex}
+      \subsubsection{Heteroscedastic Case}\label{subsubsec:heteroscedastic_case}
+      \input{src/active_learning/uncertainty_sampling/classification/heteroscedastic_case.tex}
+        \subsubsubsection{Informative Sampling for Classification}\label{subsubsubsec:informative_sampling_for_classification}
+        \input{src/active_learning/uncertainty_sampling/classification/bald.tex}
+     \section{Bayesian Optimizaton}\label{sec:bayesian_optimizaton}
+
+
+    \subsection{Examples}\label{subsec:examples}
+    \input{src/active_learning/examples.tex}
+    \subsection{Proofs}\label{subsec:proofs}
+    \input{src/active_learning/proofs.tex}
+
+
 
 
 

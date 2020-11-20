@@ -1,0 +1,25 @@
+\begin{defnbox}\nospacing
+  \begin{defn}[\proofref{proof:defn:bald}\newline Bayesian active learning by disagreement \blackrb{BALD}]\label{defn:bald}\leavevmode\\
+    \begin{align}
+      &x_{t+1}=\argmax_{\widehat{x}\in D}I\left(\thetacvec;\widehat{y}|\widehat{x},x_{1:t},y_{1:t}\right)\\[-1\jot]
+      &=\argmax_{\widehat{x}\in D}H\left(\widehat{y}|\widehat{x},x_{1:t},y_{1:t}\right)
+         -\Expect_{\thetacvec\distas\prob(\cdot|x_{1:t},y_{1:t})}\left[H\left(\widehat{y},\widehat{x},\thetacvec\right)\right]\nonumber
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{explanationbox}
+  \begin{explanation}\leavevmode
+    \begin{circlelistnosep}
+      \item $H\left(\widehat{y}|\widehat{x},x_{1:t},y_{1:t}\right)$:\\ is the entropy of
+      the predictive posterior distribution\cref{defn:posterior_predictive_distribution},
+      \text{approximate} using approximate inference \cref{sec:approximate_inference}.
+      \item $\Expect_{\thetacvec\distas\prob(\cdot|x_{1:t},y_{1:t})}\left[H\left(\widehat{y},\widehat{x},\thetacvec\right)\right]$:\\
+      is the conditional Entropy over the labels by drawing $\thetacvec$ from the posterior distribution and averagin over them.
+    \end{circlelistnosep}
+  \end{explanation}
+\end{explanationbox}
+%%% TeX-command-extra-options: "-shell-escape"
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../../formulary"
+%%% End:

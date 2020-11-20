@@ -1,0 +1,26 @@
+\begin{sectionbox}\nospacing
+  we now want to choose get/obtain labels for those samples that we are most unusre/uncertain about.\\
+  $\Rightarrow$ maximize the entropy in order to select the next label.
+\end{sectionbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[Greedy Mutual Entropy Maximization]
+    select the next point that maximizes the entropy over the label distribution:
+    \begin{align}
+          x_{t+1}&=\argmax_{x\in D}H(Y|x,x_{1:t},y_{1:t})=\argmax_{x\in D}\\[-1\jot]
+                 &=\argmax_{x\in D}-\prob(y|x,x_{1:t},y_{1:t})\\[-1\jot]
+                 &=\argmax_{x\in D}-\sum_{y}\prob(y|x,x_{1:t},y_{1:t})
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{notebox}[Notes]\nospacing
+  The posterior $\prob(y|x,x_{1:t},y_{1:t})$ is usually intractable but we can using approximate inference \cref{sec:approximate_inference} methods:
+  \begin{itemize}
+    \item Approximate Inference \cref{subsec:variational_inference}
+    \item Markov Chain Monte Carlos \cref{subsec:markov_chain_monte_carlos_methods}
+  \end{itemize}
+\end{notebox}
+%%% TeX-command-extra-options: "-shell-escape"
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../../formulary"
+%%% End:
