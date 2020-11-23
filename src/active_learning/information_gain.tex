@@ -53,7 +53,7 @@
     Only consider the next point that maximizes the mutual information and not all at once:
     \begin{align}
           x_{t+1}&=\argmax_{x\in D}F \left(S_{t}\cup \left\{x\right\}\right)\nonumber\\[-1\jot]
-                 &=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)
+                 &=\argmax_{x\in D}H(y_x|y_{S_t})-H(y_x|f)\label{eq:greedy_mutual_information_maximization_objective}
     \end{align}
   \end{defn}
 \end{defnbox}
@@ -61,7 +61,7 @@
   \begin{cor}[\hfill\proofref{proof:cor:mutal_information_maximization_homoscedactic_gaussian}\newline
     Homoscedactic Gaussian]\label{cor:mutal_information_maximization_homoscedactic_gaussian}
     \begin{align}
-      x_{t}&=\argmax_{x\in D}\std_{t-1}^2(x)
+      x_{t}&=\argmax_{x\in D}\std_{t-1}^2(x)\label{eq:mutal_information_maximization_homoscedactic_gaussian}
     \end{align}
     this can then be maximized.\\
     Let $A_{t}=\left\{x_{1},\ldots,x_{t}\right\}$ then it follows:

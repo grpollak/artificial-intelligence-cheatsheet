@@ -1,0 +1,84 @@
+\begin{sectionbox}\nospacing
+  In \cref{subsubsec:maximizing_the_information_gain} we tried to maximize our information gain about an unknown function $f$.\\
+  While While sequentially optimizing \cref{eq:greedy_mutual_information_maximization_objective,eq:mutal_information_maximization_homoscedactic_gaussian}
+  is a provably good way to explore $f$ globally, it is not well suited for function value optimization, where we only
+  care about maximizing our knowledge about the maxima.
+\end{sectionbox}
+\begin{sectionbox}[Given]\nospacing
+  \begin{itemizenosep}
+    \item set of possible inputs $D=\left\{\xvec_{1},\ldots,\xvec_{n}\right\}$
+    \item unknown (black-box) function/oracle:
+    \begin{align}
+      f\in\Fsp&&f:D\mapsto\R
+    \end{align}
+    that is expensive but from which we can draw noisy observations:
+    \begin{align}
+      y_t=f(\xvec_t)+\epsilonc
+    \end{align}
+  \end{itemizenosep}
+\end{sectionbox}
+\begin{sectionbox}[Goal]\nospacing
+  Adaptively choose inputs $\xvec_1,\ldots,\xvec_{T}\in D$ that maximize
+  the performance/function/sum of rewards:
+  \begin{align}
+    \sum_{t=1}^{T}f\left(\xvec_t\right)
+  \end{align}
+  $\Rightarrow$ need a measure of performance i.e.\ cumulative regret \cref{defn:cumulative_regret}
+  as we can only draw point samples from $f$.
+\end{sectionbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[\newline Action Set\hfill\tc{black}{$\Asp=\left\{a_{1},\ldots,a_{n}\right\}$}]\label{defn:action_set}\leavevmode\\
+    Is the set of possible actions from which we can choose at each step.
+  \end{defn}
+\end{defnbox}
+\begin{corbox}\nospacing
+  \begin{cor}
+    If we want to maximize a function $\fprob$, then its just the
+    set of possible inputs $\Asp=D$
+  \end{cor}
+\end{corbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[Optimizing Agent\bslash Decision Making Policy]\label{defn:optimizing_agent_decision_maker}\leavevmode\\
+    Is a policy on how to choose an action $a\in\Asp$ based on a objective/utility function\cref{defn:utility_function}
+  \end{defn}
+\end{defnbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[\blackrb{Cumulative} Regret for a fixed $f$]\label{defn:cumulative_regret}
+    Is defined as the the cumulative loss we suffer in comparison to taking
+    the optimal value $\xvec^*$ if we had full knowlede of $f$.
+    \begin{align}
+      \mcc[R]_T:&=\sum_{t=1}^{T}\left(\max_{\xvec\in D}f(\xvec)-f(\xvec_t)\right)=\sum_{t=1}^{T}r_t\nonumber\\[-1\jot]
+      &=T\max_{\xvec\in D}f(\xvec)-\sum_{t=1}^{T}f(\xvec_t)
+    \end{align}
+    $r_{t}$: instantaneous regret
+  \end{defn}
+\end{defnbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[\rb{Time} Average Regret]\label{defn:average_regret}
+    \begin{align}
+      \frac{\mcc[R]_T}{T}=\frac{1}{T}\sum_{t=1}^{T}r_t=\frac{1}{T}\sum_{t=1}^{T}\left(f(\xvec^*)-f(\xvec_t)\right)
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[\newline No\bslash Sublinear Regret Algorithms]
+    \begin{align}
+      &\lim_{T\to\infty}\underbrace{\frac{\mcc[R]_T}{T}}_{\mathclap{\text{Average regret}}}=0
+      &&\begin{aligned}
+          &\mcc[R]_T=\smallO{T}\\
+          &\frac{\mcc[R]_T}{T}=\smallO{1}
+         \end{aligned}&\forall \text{sequences }1,\ldots,T
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{explanationbox}
+  \begin{explanation}
+    Due to more information the instantaneous regret decreases over time and
+    we obtain no regret in average.
+  \end{explanation}
+\end{explanationbox}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-command-extra-options: "-shell-escape"
+%%% TeX-master: "../../formulary"
+%%% End:

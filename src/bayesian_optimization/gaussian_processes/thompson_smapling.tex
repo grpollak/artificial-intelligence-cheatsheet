@@ -1,0 +1,18 @@
+\begin{defnbox}\nospacing
+  \begin{defn}[Thompson Sampling]\label{defn:thompson_sampling}
+    Draw a function $\widetilde{f}$ from the posterior and maximize it:
+    \begin{align}
+      \widetilde{f}\distas\prob(f|\xvec_{1:n},\yvec_{1:t})&&\xvec_{t+1}\in\argmax_{\xvec\in D}\widetilde{f}(\xvec)
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{explanationbox}
+  \begin{explanation}[Definition~\ref{defn:thompson_sampling}]
+    The randomness in $\widetilde{f}$ helps to trade of exploration vs.\ exploitation.
+  \end{explanation}
+\end{explanationbox}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../formulary"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

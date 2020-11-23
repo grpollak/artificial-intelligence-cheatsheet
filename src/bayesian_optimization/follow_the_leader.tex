@@ -1,0 +1,31 @@
+\begin{defnbox}\nospacing
+  \begin{defn}[\newline Pure Exploration\bslash Follow the Leader Policy]\label{defn:pure_exploration_follow_the_leader}
+    Take the action with the current maximum empirical mean payoff.
+  \end{defn}
+\end{defnbox}
+\begin{algorithmbox}\nospacing
+  \begin{algo}[Epsilon Greedy Algorithm]\label{algo:epsilon_algorithm}\leavevmode
+    \begin{algorithmic}[1]
+      \item[] \imp{Set}: $\textcolor{CarnationPink}{\epsilon}_{t}=\bigO*{\frac{1}{t}}$
+        \For{$t=1,\ldots,T$}
+        \State With probability $\textcolor{CarnationPink}{\epsilon}_t$ \textit{explore} unif.\ at randomn:
+        \begin{align}
+          a_{t+1}=\Unidist \left(a_1,\ldots\abs{\Asp}\right)
+        \end{align}
+        \State With probability $1-\textcolor{CarnationPink}{\epsilon}_t$ \textit{take} action with highest known empirical mean payoff:
+        \begin{align}
+            a_{t+1}=\argmax_{a\in\Asp}\widehat{\mean}_{a,T}&&\widehat{\mean}_{a,T}=\frac{1}{n_{a,T}}\sum_{s=1}^{T}\unitvector_{\{a_s=a\}}v_{a,s}
+        \end{align}
+        \EndFor
+    \end{algorithmic}
+  \end{algo}
+\end{algorithmbox}
+\begin{notebox}[Problem]\nospacing
+  This policy is a first good try but can easily get stuck at local optima.
+  A better way would be not to sample randomly but take into account the uncertainty.
+\end{notebox}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-command-extra-options: "-shell-escape"
+%%% TeX-master: "../../formulary"
+%%% End:

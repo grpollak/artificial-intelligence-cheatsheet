@@ -1,0 +1,86 @@
+\begin{principbox}\nospacing
+  \begin{princip}[Optimization in the phase of uncertainty]\label{princip:optimization_in_the_phase_of_uncertainty}
+    Pick the action that has the highest upper confidence bound (UCP).
+  \end{princip}
+\end{principbox}
+\begin{explanationbox}
+  \begin{explanation}[\cref{princip:optimization_in_the_phase_of_uncertainty}]
+    We do not pick the action that maximizes our current estimate $\mean(x)$ but
+    the most optimistic one.\\
+    If the guess is wrong optimism will fade quickly but if the guess is right
+    we will maximize our utility will decreasing uncertainty.
+  \end{explanation}
+\end{explanationbox}
+\begin{defnbox}\nospacing
+  \begin{defn}[GP-UCB]\label{defn:gp-ucb}
+    \begin{align}
+      \xvec_{t}=\argmax_{x\in D}\mean_{t-1}(\xvec)+\betac_{t}\std_{t-1}(\xvec)
+    \end{align}
+  \end{defn}
+\end{defnbox}
+\begin{explanationbox}
+  \begin{explanation}[Definition~\ref{defn:gp-ucb}]\leavevmode
+    \begin{itemizenosep}
+      \item $\betac_{t}\to\infty$ recover uncertainty sampling
+      \item $\betac_{t}=0$ recover greedy algorithm
+    \end{itemizenosep}
+  \end{explanation}
+\end{explanationbox}
+\subsubsubsection{Maximizing the UCB}\label{subsubsubsec:maximizing_the_ucb}
+\begin{sectionbox}\nospacing
+  The GP-UCB\cref{defn:gp-ucb} is usually a non-convex function. Thus in order to maximize this objective
+  we need to use:
+  \begin{itemizenosep}
+    \item \textit{Lipschitz Optimization} (in low dimension)
+    \item Use gradient descent based on multiple random initialization (in high dimension)
+  \end{itemizenosep}
+\end{sectionbox}
+\subsubsubsection{Guarantees on the regret}\label{subsubsubsec:guarantees_on_the_regret}
+\begin{theorembox}\nospacing
+  \begin{theorem}[Bayesian Regret of GP-UCB]\label{theorem:bayesian_regret_of_gp-ucb}
+    assuming the true function $f$ follows a Gaussian Process $f\distas\GP$ then it holds that
+    for a suitable choice of $\betac_{t}$ (needs to slowly decay with const$\cdot\log t$):
+    \begin{align*}
+      \frac{1}{T}\sum_{t=1}^{T}\left[f(\xvec^*)-f(\xvec_{t})\right]=\bigO \left(\frac{\gammac_{T}}{T}\right)&&T:\text{ \#of samples}
+    \end{align*}
+    with\hfil$\gammac_{T}=\max_{\abs{S}\leq T}I(f;y_{S})$
+  \end{theorem}
+\end{theorembox}
+\begin{explanationbox}
+  \begin{explanation}[$\gammac_{T}$]
+    The regret depends on how much information we can gain in $T$ steps.
+  \end{explanation}
+\end{explanationbox}
+\begin{corbox}\nospacing
+  \begin{cor}[Linear Kernel]\leavevmode\\
+    For a linear kernel\cref{defn:linear_kernel} it holds:
+    \begin{align}
+      \gammac_{T}=\bigO(d\log T)
+    \end{align}
+  \end{cor}
+\end{corbox}
+\begin{corbox}\nospacing
+  \begin{cor}[Squared Exponential Kernel]\leavevmode\\
+    For a squared exponential kernel\cref{defn:ml_gaussian_rbf_squared_exponential_kernel} it holds:
+    \begin{align}
+      \gammac_{T}=\bigO*{(\log T)^{d+1}}
+    \end{align}
+  \end{cor}
+\end{corbox}
+\begin{corbox}\nospacing
+  \begin{cor}[Matern Kernel $\nuc>2$]\leavevmode\\
+    For a linear kernel\cref{defn:ml_matern_kernel} it holds:
+    \begin{align}
+      \gammac_{T}=\bigO*{T^{\frac{d(d+1)}{2\nuc+d(d+1)}}}
+    \end{align}
+  \end{cor}
+\end{corbox}
+\begin{notebox}[Note: Reproducing Kernel Hilbert Space (RKHS)]\nospacing
+  There exists also a frequentists regret of GP-UCB which only assumes that $f$ is part of a hilbert space
+  and overinflates the confidence bounds in order to obtain good estimates.
+\end{notebox}
+%%% TeX-command-extra-options: "-shell-escape"
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../formulary"
+%%% End:
