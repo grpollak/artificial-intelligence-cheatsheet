@@ -21,20 +21,31 @@
 % Document class
 % ------------------------------------------------------------------------------
 \documentclass[
+  % test,
   fourColumns,
-  landscape
+  landscape,
+  % english
 ]{formularyETH/formularyETH}
 % formuaryETH packages
 % ------------------------------------------------------------------------------
 \usepackage{formularyETH/formularyETH_GeneralPackages}
+\usepackage{formularyETH/formularyETH_theorems}
+\usepackage{formularyETH/formularyETH_items}
 \usepackage{formularyETH/formularyETH_underline}
 \usepackage{formularyETH/extern/formularyETH_scientific}
 \usepackage{formularyETH/extern/formularyETH_tikz}
 \usepackage{formularyETH/extern/formularyETH_coding}
 \usepackage{formularyETH/extern/formularyETH_algorithms}
 \usepackage{formularyMacros}
+
 \usepackage{math_submodule/formularyMacros} 
-\usepackage{ml_submodule/formularyMacros} 
+
+\usepackage{ml_submodule/formularyMacros}
+\usepackage{ml_submodule/macros/spaces}
+\usepackage{ml_submodule/macros/nlu}
+\usepackage{ml_submodule/macros/nn}
+\usepackage{ml_submodule/macros/ml}
+\usepackage{ml_submodule/macros/pac}
 % -----------------------------math Formulary----------------------------------- 
 % if git@gitlab.vis.ethz.ch:formularies/math.git is used as submodule
 % ------------------------------------------------------------------------------
@@ -75,10 +86,7 @@
 % Document begin
 % ==============================================================================
 \begin{document}
-% Chapter 1
 \section*{Probabilistic Artificial Intelligence}\label{sec:probabilistic_artificial_intelligence}
-  \section{Markov Decision Processes}\label{sec:markov_decision_processes}
-    \input{src/markov_decsision_processes/intro.tex}
   \section{Active Learning}\label{sec:active_learning}
     \input{src/active_learning/intro.tex}
     \subsection{Uncertainty Sampling for Regression}\label{subsec:uncertainty_sampling_for_regression}
@@ -120,10 +128,10 @@
 % TODO
 % ======================================================================
 % \input{src/General_TODO.tex}
-\newpage  
+% \newpage
 \section*{Machine Learning Appendix}\label{sec:ml_appendix}
   \input{ml_submodule/ml.tex}
-\newpage  
+\newpage
 \section*{Math Appendix}\label{sec:math_appendix}
 \input{math_submodule/math.tex}
 % ==============================================================================
