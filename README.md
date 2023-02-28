@@ -1,2 +1,1 @@
-# This is my formulary formulary
-## Further Information 
+# Artifical Intelligence cheat-sheet
